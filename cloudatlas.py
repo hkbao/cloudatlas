@@ -58,5 +58,5 @@ class CloudAtlas(object):
             return False
 
 if __name__ == "__main__":
-    ca = CloudAtlas("嫌疑人x的献身")
+    ca = CloudAtlas(u"嫌疑人x的献身")
     ca.do_query()
