@@ -2,9 +2,15 @@ import os
 import time
 import hashlib
 import jieba.analyse
-import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from douban import DoubanMovie
+
+try:
+    import matplotlib.pyplot as plt
+except:
+    import matplotlib
+    matplotlib.use("agg", warn=False, force=True)
+    from matplotlib import pyplot as plt
 
 try:
     import configparser
@@ -36,7 +42,7 @@ class CloudAtlas(object):
         wc.to_file(filepath)
 
     def do_query(self):
-        query_sha1  = hashlib.sha1(self.query).hexdigest()
+        query_sha1  = hashlib.sha1(self.query.encode("utf-8")).hexdigest()
         second_path = os.path.join(cache_path, query_sha1[0:2])
         cache_file  = os.path.join(second_path, query_sha1 + ".png")
         if not self.is_recent_file(cache_file):
@@ -58,5 +64,5 @@ class CloudAtlas(object):
             return False
 
 if __name__ == "__main__":
-    ca = CloudAtlas(u"嫌疑人x的献身")
+    ca = CloudAtlas("嫌疑人x的献身")
     ca.do_query()

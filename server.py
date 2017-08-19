@@ -12,5 +12,4 @@ def hello():
 def get_wordcloud():
     query = request.args.get('q', '')
     ca = CloudAtlas(query)
-    with open(ca.do_query()) as f:
-        return send_file(f, mimetype='image/png')
+    return send_file(ca.do_query(), mimetype='image/png')
