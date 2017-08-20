@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Movie Info - Cloud Atlas</title>
-</head>
-<body>
-    <h1> {{title}} </h1>
-    <p>rating: {{ average }}</p>
-
-    {# a comment #}
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>电影信息 - {{ title }}</title>
+        <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
+  </head>
+  <body>
+    <div class="weui-flex">
+      <div><img src="{{ image }}" alt></img></div>
+      <div class="weui-flex__item"><div class="placeholder">
+        <h1>{{ title }} ({{ year[0] }})</h1>
+        <h3 class="title">导演：{% for dir in director %}<li>{{ dir }}</li>{% endfor %}</h3>
+        <h3 class="title">主演：{% for cas in cast %}<li>{{ cas }}</li>{% endfor %}</h3>
+        <h3 class="title">类型：{% for mt in movie_type %}<li>{{ mt }}</li>{% endfor %}</h3>
+        <h3 class="title">国家/地区：{% for ct in country %}<li>{{ ct }}</li>{% endfor %}</h3>
+        <h3 class="title">上映日期：{{ pubdate[0] }}</h3>
+        <h3 class="title">片长：{{movie_duration[0]}}</h3>
+      </div></div>
+    </div>
+    <div class="weui-flex">
+      <div class="weui-flex__item"><div class="placeholder">
+        <h1>豆瓣评分： {{ rating.average }}</h1>
+      </div></div>
+      <div class="weui-flex__item"><div class="placeholder">
+        <h1>评分人数： {{ rating.numRaters }}</h1>
+      </div></div>
+    </div>
+    <div class="weui-flex">
+      <div class="weui-flex__item"><div class="placeholder">
+        <div class="weui-loadmore">
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">云图正在加载...</span>
+            <img src="/wordcloud?q={{id}}&t=movie" alt></img>
+        </div>
+      </div></div>
+    </div>
+    <div class="weui-footer">
+      <p class="weui-footer__links">
+        <a href="http://iamted.cc" class="weui-footer__link">about this app</a>
+        <a href="javascript:void(0);" class="weui-footer__link">built with wordcloud</a>
+      </p>
+      <p class="weui-footer__text">Copyright © 2008-2018 iamted.cc</p>
+    </div>
+  </body>
 </html>

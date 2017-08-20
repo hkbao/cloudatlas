@@ -11,7 +11,7 @@ class DoubanMovie(Douban):
         super(DoubanMovie, self).__init__()
         self.base_url = "https://movie.douban.com"
         if name.isdigit() and int(name) > 100000:
-            self.id = str(id)
+            self.id = str(name)
             self.url = self.base_url + "/subject/" + self.id
         else:
             self.search_movie(name)
