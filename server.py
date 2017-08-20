@@ -1,5 +1,5 @@
 from cloudatlas import CloudAtlas
-from wechathandler import wechat_echo
+from wechat.handler import wechat_auth, handle_msg
 from douban import DoubanMovie
 from flask import Flask
 from flask import request
@@ -7,15 +7,20 @@ from flask import send_file
 from flask import render_template
 app = Flask(__name__)
 
-@app.route("/app")
+@app.route("/app", methods=["GET", "POST"])
 def main():
-    signature = request.args.get("signature", "")
-    timestamp = request.args.get("timestamp", "")
-    nonce     = request.args.get("nonce", "")
-    echostr   = request.args.get("echostr", "")
-    return wechat_echo(signature, timestamp, nonce, echostr)
+    if request.method == "GET":
+        if wechat_auth(request):
+            return request.args.get("echostr", "")
+        else:
+            return ""
+    if request.method == "POST":
+        if wechat_auth(request):
+            return handle_msg(request.data)
+        else:
+            abort(401)
 
-@app.route("/app/wordcloud",  methods=["GET"])
+@app.route("/app/wordcloud", methods=["GET"])
 def get_wordcloud():
     qtype  = request.args.get("t", "movie")
     query = request.args.get("q", "")
