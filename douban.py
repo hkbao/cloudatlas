@@ -10,8 +10,11 @@ class DoubanMovie(Douban):
     def __init__(self, name):
         super(DoubanMovie, self).__init__()
         self.base_url = "https://movie.douban.com"
-        self.search_movie(name)
-        self.basic_info = self.get_basic_info()
+        if name.isdigit() and int(name) > 100000:
+            self.id = str(id)
+            self.url = self.base_url + "/subject/" + self.id
+        else:
+            self.search_movie(name)
 
     def search_movie(self, name):
         resp = requests.get(self.base_url + "/j/subject_suggest", params={"q": name})

@@ -3,7 +3,6 @@ import time
 import hashlib
 import jieba.analyse
 from wordcloud import WordCloud
-from douban import DoubanMovie
 
 try:
     import matplotlib.pyplot as plt
@@ -18,14 +17,17 @@ try:
     config.read("config.conf")
     cache_path = config["cache_path"]
 except Exception:
-    cache_path = "./cached-files"
+    cache_path = "/tmp/cached-files"
 finally:
     if not os.path.exists(cache_path):
         os.mkdir(cache_path)
 
+def get_script_path():
+    return os.path.dirname(os.path.realpath(__file__))
+
 class CloudAtlas(object):
-    def __init__(self, query):
-        self.query = query
+    def __init__(self, obj):
+        self.obj = obj
 
     def get_keywords(self, content):
         # First, eliminate stopwords
@@ -34,27 +36,23 @@ class CloudAtlas(object):
         return dict(tags)
 
     def get_keyword_cloud(self, content, filepath):
-        wc = WordCloud(font_path="yahei.ttf", width=680, height=400, background_color="white", max_font_size=150)
+        wc = WordCloud(font_path=get_script_path() + "/yahei.ttf", \
+            width=680, height=400, background_color="white", max_font_size=150)
         wc = wc.fit_words(self.get_keywords(content))
         plt.imshow(wc)
         plt.axis("off")
         plt.figure()
         wc.to_file(filepath)
 
-    def do_query(self):
-        query_sha1  = hashlib.sha1(self.query.encode("utf-8")).hexdigest()
-        second_path = os.path.join(cache_path, query_sha1[0:2])
-        cache_file  = os.path.join(second_path, query_sha1 + ".png")
+    def get_cloud_img(self):
+        id_sha1     = hashlib.sha1(self.obj.id.encode("utf-8")).hexdigest()
+        second_path = os.path.join(cache_path, id_sha1[0:2])
+        cache_file  = os.path.join(second_path, id_sha1 + ".png")
         if not self.is_recent_file(cache_file):
             if not os.path.exists(second_path):
                 os.mkdir(second_path)
-            obj = self.triage_query()
-            self.get_keyword_cloud(obj.get_content(), cache_file)
+            self.get_keyword_cloud(self.obj.get_content(), cache_file)
         return cache_file
-
-    def triage_query(self):
-        # do something to triage a query, so that we know which object to new
-        return DoubanMovie(self.query)
 
     def is_recent_file(self, filepath):
         # if file is modified within 7 days, it's a recent file
@@ -64,5 +62,4 @@ class CloudAtlas(object):
             return False
 
 if __name__ == "__main__":
-    ca = CloudAtlas("嫌疑人x的献身")
-    ca.do_query()
+    pass
