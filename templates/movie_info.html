@@ -11,13 +11,13 @@
     <div class="weui-flex">
       <div><img src="{{ image }}" alt></img></div>
       <div class="weui-flex__item"><div class="placeholder">
-        <h1>{{ title }} ({{ year[0] }})</h1>
-        <h3 class="title">导演：{% for dir in director %}<li>{{ dir }}</li>{% endfor %}</h3>
-        <h3 class="title">主演：{% for cas in cast %}<li>{{ cas }}</li>{% endfor %}</h3>
-        <h3 class="title">类型：{% for mt in movie_type %}<li>{{ mt }}</li>{% endfor %}</h3>
-        <h3 class="title">国家/地区：{% for ct in country %}<li>{{ ct }}</li>{% endfor %}</h3>
-        <h3 class="title">上映日期：{{ pubdate[0] }}</h3>
-        <h3 class="title">片长：{{movie_duration[0]}}</h3>
+        <h1>{{ title }} ({{ attrs.year[0] }})</h1>
+        <p class="weui-media-box__desc"><span style="color: black">导演:</span>{% for dir in attrs.director %}<span>{{ dir }}</span>{% endfor %}</p>
+        <p class="weui-media-box__desc"><span style="color: black">主演:</span>{% for cas in attrs.cast %}<span>{{ cas }}</span>{% endfor %}</p>
+        <p class="weui-media-box__desc"><span style="color: black">类型:</span>{% for mt in attrs.movie_type %}<span>{{ mt }}</span>{% endfor %}</p>
+        <p class="weui-media-box__desc"><span style="color: black">国家/地区:</span>{% for ct in attrs.country %}<span>{{ ct }}</span>{% endfor %}</p>
+        <p class="weui-media-box__desc"><span style="color: black">上映日期:</span>{{ attrs.pubdate[0] }}</p>
+        <p class="weui-media-box__desc"><span style="color: black">片长:</span>{{ attrs.movie_duration[0] }}</p>
       </div></div>
     </div>
     <div class="weui-flex">
@@ -33,7 +33,7 @@
         <div class="weui-loadmore">
             <i class="weui-loading"></i>
             <span class="weui-loadmore__tips">云图正在加载...</span>
-            <img src="/wordcloud?q={{id}}&t=movie" alt></img>
+            <img src="/wordcloud?q={{mid}}&t=movie" alt></img>
         </div>
       </div></div>
     </div>

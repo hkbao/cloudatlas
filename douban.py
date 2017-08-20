@@ -28,9 +28,12 @@ class DoubanMovie(Douban):
             raise Exception("Movie not found according to the keyword \"%s\"" % name)
 
     def get_basic_info(self):
-        resp = requests.get(self.api_url + "/movie/subject/" + self.id)
+        resp = requests.get(self.api_url + "/movie/" + self.id)
         resp.raise_for_status()
-        return resp.json()
+        info = resp.json()
+        info["mid"] = self.id
+        info["image"] = info["image"].replace("/ipst/", "/lpst/")
+        return info
 
     def get_comments(self):
         comments = []
