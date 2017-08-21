@@ -34,7 +34,7 @@ class DoubanMovie(Douban):
         info["mid"] = self.id
         info["image"] = info["image"].replace("/ipst/", "/mpst/")
         for key in info["attrs"]:
-            info["attrs"][key] = "/".join(info["attrs"][key][0:5])
+            info["attrs"][key] = "/".join([attr.split(" ")[0] for attr in info["attrs"][key][0:5]])
         return info
 
     def get_comments(self):

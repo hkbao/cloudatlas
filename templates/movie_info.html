@@ -6,16 +6,17 @@
     <title>电影信息 - {{ title }}</title>
         <!-- 引入 WeUI -->
     <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
-    <link rel="stylesheet" href="//weui.io/example.css"/>
+    <link rel="stylesheet" href="https://weui.io/example.css"/>
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
   </head>
   <body>
     <div class="page flex js_show">
-      <div class="page__hd">
-        <h1 class="page__title">{{ title }} <span>{{ attrs.year[0] }}</span></h1>
+      <div class="page__hd" style="padding: 20px">
+        <h1 class="page__title">{{ title }} <span style="color: grey">({{ attrs.year }})</span></h1>
         <p class="page__desc">豆瓣评分: {{ rating.average }} ( {{rating.numRaters}} 人评价)</p>
       </div>
       <div class="page__bd page__bd_spacing">
-        <div class="weui-flex">
+        <div class="weui-flex weui-article">
           <div class="weui-flex__item">
             <p class="weui-media-box__desc"><span style="color: black">导演: </span>{{ attrs.director }}</p>
             <p class="weui-media-box__desc"><span style="color: black">主演: </span>{{ attrs.cast }}</p>
@@ -24,19 +25,25 @@
             <p class="weui-media-box__desc"><span style="color: black">上映日期: </span>{{ attrs.pubdate }}</p>
             <p class="weui-media-box__desc"><span style="color: black">片长: </span>{{ attrs.movie_duration }}</p>
           </div>
-          <div><img src="{{ image }}" alt></img></div>
+          <div class="weui-flex" style="padding: 0 0 0 10px"><img src="{{ image }}" alt></img></div>
         </div>
         <div class="weui-flex">
           <div class="weui-flex__item">
-            <div class="weui-loadmore">
-                <i class="weui-loading"></i>
-                <span class="weui-loadmore__tips">云图正在加载...</span>
-                <h2 class="title">豆瓣短评关键字: </h2>
-                <img src="/app/wordcloud?q={{mid}}&t=movie" alt></img>
+             <div >
+              <article class="weui-article"><section>
+                <h3>豆瓣短评关键字: </h2>
+                <div id="img-loading" class="weui-loadmore">
+                  <i class="weui-loading"></i>
+                  <span class="weui-loadmore__tips">云图正在加载...</span>
+                </div>
+                <p>
+                  <img id="img-cloud" src=""></img>
+                </p>
+              </section></article>
             </div>
           </div>
         </div>
-        <div class="weui-footer weui-footer_fixed-bottom">
+        <div class="weui-footer">
           <p class="weui-footer__links">
             <a href="http://iamted.cc" class="weui-footer__link">关于此应用</a>
             <a href="{{ mobile_link }}" class="weui-footer__link">豆瓣原始页</a>
@@ -45,5 +52,11 @@
         </div>
       </div>
     </div>
+    <script>
+      $(window).load(function () { 
+        $("#img-cloud").attr("src", "/app/wordcloud?q={{mid}}&t=movie");
+        $("#img-cloud").load(function () { $("#img-loading").hide() });
+      });
+    </script>
   </body>
 </html>
