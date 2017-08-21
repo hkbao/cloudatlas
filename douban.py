@@ -32,7 +32,7 @@ class DoubanMovie(Douban):
         resp.raise_for_status()
         info = resp.json()
         info["mid"] = self.id
-        info["image"] = info["image"].replace("/ipst/", "/lpst/")
+        info["image"] = info["image"].replace("/ipst/", "/mpst/")
         for key in info["attrs"]:
             info["attrs"][key] = "/".join(info["attrs"][key][0:5])
         return info
