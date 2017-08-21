@@ -9,41 +9,37 @@
     <link rel="stylesheet" href="//weui.io/example.css"/>
   </head>
   <body>
-    <div class="page js_show">
+    <div class="page flex js_show">
+      <div class="page__hd">
+        <h1 class="page__title">{{ title }} <span>{{ attrs.year[0] }}</span></h1>
+        <p class="page__desc">豆瓣评分: {{ rating.average }} ( {{rating.numRaters}} 人评价)</p>
+      </div>
       <div class="page__bd page__bd_spacing">
         <div class="weui-flex">
-          <div><div class="placeholder"><img src="{{ image }}" alt></img></div></div>
-          <div class="weui-flex__item"><div class="placeholder">
-            <h1>{{ title }} ({{ attrs.year[0] }})</h1>
-            <p class="weui-media-box__desc"><span style="color: black">导演: </span>{% for dir in attrs.director %}<span>{{ dir }}</span>{% endfor %}</p>
-            <p class="weui-media-box__desc"><span style="color: black">主演: </span>{% for cas in attrs.cast %}<span>{{ cas }}</span>{% endfor %}</p>
-            <p class="weui-media-box__desc"><span style="color: black">类型: </span>{% for mt in attrs.movie_type %}<span>{{ mt }}</span>{% endfor %}</p>
-            <p class="weui-media-box__desc"><span style="color: black">国家/地区: </span>{% for ct in attrs.country %}<span>{{ ct }}</span>{% endfor %}</p>
-            <p class="weui-media-box__desc"><span style="color: black">上映日期: </span>{{ attrs.pubdate[0] }}</p>
-            <p class="weui-media-box__desc"><span style="color: black">片长: </span>{{ attrs.movie_duration[0] }}</p>
-          </div></div>
+          <div class="weui-flex__item">
+            <p class="weui-media-box__desc"><span style="color: black">导演: </span>{{ attrs.director }}</p>
+            <p class="weui-media-box__desc"><span style="color: black">主演: </span>{{ attrs.cast }}</p>
+            <p class="weui-media-box__desc"><span style="color: black">类型: </span>{{ attrs.movie_type }}</p>
+            <p class="weui-media-box__desc"><span style="color: black">国家/地区: </span>{{ attrs.country }}</p>
+            <p class="weui-media-box__desc"><span style="color: black">上映日期: </span>{{ attrs.pubdate }}</p>
+            <p class="weui-media-box__desc"><span style="color: black">片长: </span>{{ attrs.movie_duration }}</p>
+          </div>
+          <div><img src="{{ image }}" alt></img></div>
         </div>
         <div class="weui-flex">
-          <div class="weui-flex__item"><div class="placeholder">
-            <h1>豆瓣评分： {{ rating.average }}</h1>
-          </div></div>
-          <div class="weui-flex__item"><div class="placeholder">
-            <h1>评分人数： {{ rating.numRaters }}</h1>
-          </div></div>
-        </div>
-        <div class="weui-flex">
-          <div class="weui-flex__item"><div class="placeholder">
+          <div class="weui-flex__item">
             <div class="weui-loadmore">
                 <i class="weui-loading"></i>
                 <span class="weui-loadmore__tips">云图正在加载...</span>
-                <img src="/wordcloud?q={{mid}}&t=movie" alt></img>
+                <h2 class="title">豆瓣短评关键字: </h2>
+                <img src="/app/wordcloud?q={{mid}}&t=movie" alt></img>
             </div>
-          </div></div>
+          </div>
         </div>
         <div class="weui-footer weui-footer_fixed-bottom">
           <p class="weui-footer__links">
-            <a href="http://iamted.cc" class="weui-footer__link">about this app</a>
-            <a href="javascript:void(0);" class="weui-footer__link">built with wordcloud</a>
+            <a href="http://iamted.cc" class="weui-footer__link">关于此应用</a>
+            <a href="{{ mobile_link }}" class="weui-footer__link">豆瓣原始页</a>
           </p>
           <p class="weui-footer__text">Copyright © 2008-2018 iamted.cc</p>
         </div>
