@@ -1,4 +1,5 @@
 import requests
+import threading
 from bs4 import BeautifulSoup
 
 class Douban(object):
@@ -39,20 +40,26 @@ class DoubanMovie(Douban):
 
     def get_comments(self):
         comments = []
-        next_page = self.url + "/comments"
-        for i in range(10):
-            resp = requests.get(next_page)
+        threads = []
+        def get_comment_page(url):
+            resp = requests.get(url)
             if resp.status_code != 200:
-                break
+                print("oops %d" % resp.status_code)
+                return
             data = BeautifulSoup(resp.text, "html.parser")
-            np_button = data.find("div", id="paginator").find("a", class_="next")
             for comment in data.find_all("div", class_="comment"):
                 comments.append(comment.p.text.strip())
-            if np_button:
-                next_page = self.url + "/comments" + np_button["href"]
-            else:
-                break
-        return comments
+        for i in range(10):
+            page_url = self.url + "/comments?start=%d&limit=20&sort=new_score&status=P" % (i * 20)
+            threads.append(threading.Thread(target=get_comment_page,args=(page_url,)))
+            threads[-1].start()
+        for t in threads:
+            t.join()
+        return set(comments)
 
     def get_content(self):
         return "".join(self.get_comments())
+
+if __name__ == "__main__":
+    movie = DoubanMovie("ted2")
+    print(movie.get_content())
