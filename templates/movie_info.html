@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>电影信息 - {{ title }}</title>
+    <title>你的关键字 - 电影 - {{ title }}</title>
         <!-- 引入 WeUI -->
     <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
     <link rel="stylesheet" href="https://weui.io/example.css"/>
@@ -12,7 +12,7 @@
   <body>
     <div class="page flex js_show">
       <div class="page__hd" style="padding: 20px">
-        <h1 class="page__title">{{ title }} <span style="color: grey">({{ attrs.year }})</span></h1>
+        <h2 class="page__title">{{ title }} <span style="color: grey">({{ attrs.year }})</span></h2>
         <p class="page__desc">豆瓣评分: {{ rating.average }} ( {{rating.numRaters}} 人评价)</p>
       </div>
       <div class="page__bd page__bd_spacing">
@@ -29,18 +29,16 @@
         </div>
         <div class="weui-flex">
           <div class="weui-flex__item">
-             <div >
-              <article class="weui-article"><section>
-                <h3>豆瓣短评关键字: </h2>
-                <div id="img-loading" class="weui-loadmore">
-                  <i class="weui-loading"></i>
-                  <span class="weui-loadmore__tips">云图正在加载...</span>
-                </div>
-                <p>
-                  <img id="img-cloud" src=""></img>
-                </p>
-              </section></article>
-            </div>
+            <article class="weui-article"><section>
+              <h3>豆瓣短评关键字: </h2>
+              <div id="img-loading" class="weui-loadmore">
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">云图正在加载...</span>
+              </div>
+              <p>
+                <img id="img-cloud" src=""></img>
+              </p>
+            </section></article>
           </div>
         </div>
         <div class="weui-footer">

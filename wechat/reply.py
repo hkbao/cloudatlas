@@ -57,9 +57,8 @@ class ImageTextMsg(Msg):
 
     def set_movie_info(self, info):
         self.__dict['MovieTitle'] = "%s (%s)" % (info['title'], info['attrs']['year'])
-        self.__dict['MovieDescription'] = "导演:%s|主演:%s|类型:%s|时长:%s" % \
-            (info['attrs'].get('director'), info['attrs'].get('cast',''), info['attrs'].get('movie_type'), info['attrs'].get('movie_duration'))
-        #self.__dict['MoviePic'] = info['image'].replace('/mpst/', '/lpst/')
+        self.__dict['MovieDescription'] = "导演:%s|主演:%s|类型:%s|豆瓣评分:%s" % \
+            (info['attrs'].get('director'), info['attrs'].get('cast',''), info['attrs'].get('movie_type'), info['rating'].get('average'))
         self.__dict['MoviePic'] = "http://iamted.cc/app/wordcloud?q=%s&t=movie" % info['mid']
         self.__dict['url'] = "http://iamted.cc/app/movie/" + info['mid']
  

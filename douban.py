@@ -44,7 +44,6 @@ class DoubanMovie(Douban):
         def get_comment_page(url):
             resp = requests.get(url)
             if resp.status_code != 200:
-                print("oops %d" % resp.status_code)
                 return
             data = BeautifulSoup(resp.text, "html.parser")
             for comment in data.find_all("div", class_="comment"):
