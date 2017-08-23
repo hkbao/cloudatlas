@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">{{movieInfo.title}} ({{movieInfo.attrs.year}})</view>
+        <view class="page__desc">豆瓣评分：{{movieInfo.rating.average}} ( {{movieInfo.rating.numRaters}} 人评价)</view>
+    </view>
+    <view class="page__bd page__bd_spacing">
+        <view class="weui-flex weui-article">
+            <view class="weui-flex__item">
+                <view class="weui-media-box__desc weui-article__p"><text style="color: #000">导演:</text> {{movieInfo.attrs.director}}</view>
+                <view class="weui-media-box__desc weui-article__p"><text style="color: #000">主演:</text> {{movieInfo.attrs.cast }}</view>
+                <view class="weui-media-box__desc weui-article__p"><text style="color: #000">类型:</text> {{movieInfo.attrs.movie_type }}</view>
+                <view class="weui-media-box__desc weui-article__p"><text style="color: #000">国家/地区:</text> {{movieInfo.attrs.country }}</view>
+                <view class="weui-media-box__desc weui-article__p"><text style="color: #000">上映日期:</text> {{movieInfo.attrs.pubdate }}</view>
+                <view class="weui-media-box__desc weui-article__p"><text style="color: #000">片长:</text> {{movieInfo.attrs.movie_duration }}</view>
+            </view>
+            <view style="padding: 0 0 0 10px">
+              <image src="{{movieInfo.image}}" mode="aspectFit" style="width: 136px; height: 200px;"></image>
+            </view>
+        </view>
+        <view class="weui-flex weui-article">
+            <view class="weui-flex__item">
+              豆瓣短评关键字:
+              <view class="weui-loadmore" wx:if="{{imgLoading}}">
+                <view class="weui-loading"></view>
+                <view class="weui-loadmore__tips">正在生成你的关键字云图...</view>
+              </view>
+              <image src="http://iamted.cc/app/wordcloud?q={{mid}}&t=movie" mode="aspectFit" style="width: 100%" bindload="bindCloudImageLoad"></image>
+            </view>
+        </view>
+        <view class="weui-footer">
+            <view class="weui-footer__links">
+                <navigator url="../about/about" class="weui-footer__link">关于此程序</navigator>
+            </view>
+            <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+        </view>
+    </view>
+</view>

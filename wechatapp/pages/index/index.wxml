@@ -1,34 +1,38 @@
-<!--index.wxml-->
-<view class="page">
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
     <view class="page__hd">
-        <view class="page__title">{{movieInfo.title}}</view>
-        <view class="page__desc">豆瓣评分：{{movieInfo.rating.average}} ( {{movieInfo.ratings_count}} 人评价)</view>
+        <view class="page__title">搜索你的关键词</view>
+        <view class="page__desc">选择数据源，并键入需要查询的内容</view>
     </view>
-    <view class="page__bd page__bd_spacing">
-        <view class="weui-flex weui-article">
-            <view class="weui-flex__item">
-                <view class="weui-article__p">导演: {{movieInfo.directors[0].name}}</view>
-                <view class="weui-article__p">主演: {{movieInfo.attrs.cast }}</view>
-                <view class="weui-article__p">类型: {{movieInfo.attrs.movie_type }}</view>
-                <view class="weui-article__p">国家/地区: {{movieInfo.attrs.country }}</view>
-                <view class="weui-article__p">上映日期: {{movieInfo.attrs.pubdate }}</view>
-                <view class="weui-article__p">片长: {{movieInfo.attrs.movie_duration }}</view>
-            </view>
-            <view style="padding: 0 0 0 10px">
-              <image src="{{movieInfo.images.medium}}" mode="aspectFit" style="width: 160px"></image>
-            </view>
-        </view>
-        <view class="weui-flex weui-article">
-            <view class="weui-flex__item">
-              <view class="weui-article__p">豆瓣短评关键字:</view>
-              <image src="http://iamted.cc/app/wordcloud?q={{mid}}&t=movie" mode="aspectFit" style="width: 100%"></image>
+    <view class="page__bd">
+        <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示</view>
+        <view class="weui-cells__title">搜索</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd" style="width: 100px">
+                    <picker bindchange="bindDataSourceChange" value="{{dataSourceIndex}}" range="{{dataSourceNames}}">
+                        <view class="weui-select">{{dataSourceNames[dataSourceIndex]}}</view>
+                    </picker>
+                </view>
+                <view class="weui-cell__bd weui-cell__bd_in-select-before">
+                    <input class="weui-input" placeholder="{{currentPlaceHolder}}" bindinput="bindQueryStringInput" />
+                </view>
+                <view class="weui-cell__ft">
+                    <view class="weui-vcode-btn" bindtap="bindSearch" type="submit">搜索</view>
+                </view>
             </view>
         </view>
-        <view class="weui-footer">
-            <view class="weui-footer__links">
-                <navigator url="" class="weui-footer__link">底部链接</navigator>
+        <view class="weui-cells weui-cells_after-title" wx:if="{{searchSuggestions.length}}" >
+          <view class="weui-cell" wx:for="{{searchSuggestions}}" wx:key="id" wx:if="{{item.year}}">
+            <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <image src="{{item.img}}" mode="center" style="width: 65px; height: 65px; display: block"/>
             </view>
-            <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+            <view class="weui-cell__bd">
+              <navigator url="../douban/movie?id={{item.id}}">
+                <view>{{item.title}} ({{item.year}})</view>
+                <view style="font-size: 13px;color: #888888;">{{item.sub_title}}</view>
+              </navigator>
+            </view>
+          </view>
         </view>
     </view>
 </view>

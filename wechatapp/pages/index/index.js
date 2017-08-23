@@ -3,39 +3,55 @@
 var app = getApp()
 Page({
   data: {
-    mid: '',
-    movieInfo: {}
+    dataSources: ['douban/movie'],
+    dataSourceNames: ['电影'],
+    suggestUrls: ['https://movie.douban.com/j/subject_suggest'],
+    placeHolders: ['电影,电视剧,综艺...'],
+    currentPlaceHolder: '电影,电视剧,综艺...',
+    searchSuggestions: [],
+    dataSourceIndex: 0,
+    qstr: ''
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
+  bindDataSourceChange: function(e) {
+    this.setData({
+      dataSourceIndex: e.detail.value,
+      currentPlaceHolder: this.data.placeHolders[e.detail.value]
     })
   },
-  onLoad: function (option) {
-    console.log('onLoad')
-    var that = this
-    that.setData({
-      mid: option.id
+  bindQueryStringInput: function(e) {
+    this.setData({
+      qstr: e.detail.value
     })
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
+    this.searchSuggest(e.detail.value)
+  },
+  bindSearch: function(e) {
+    if (this.data.searchSuggestions.length > 0) {
+      var mid = this.data.searchSuggestions[0].id
+      var dataSource = this.data.dataSources[this.data.dataSourceIndex]
+      wx.navigateTo({
+        url: '../' + dataSource + '?id=' + mid
       })
-    });
+    }
+  },
+  searchSuggest: function(query) {
+    var that = this
+    if (this.data.dataSourceIndex == 0) {
+      var suggestUrl = this.data.suggestUrls[0] + '?q=' + query
+    }
     wx.request({
-      url: 'https://api.douban.com/v2/movie/subject/' + option.id,
+      url: suggestUrl,
       header: {
         'content-type': 'json'
       },
-      referrer: null,
       success: function (res) {
         that.setData({
-          movieInfo: res.data
-        })
+          searchSuggestions: res.data
+        });
       }
     })
+  },
+  onLoad: function() {
+    console.log('onLoad')
   }
 })

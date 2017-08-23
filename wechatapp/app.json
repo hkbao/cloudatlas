@@ -1,12 +1,13 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/douban/movie",
     "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "你的关键词(豆瓣)",
+    "navigationBarTitleText": "你的关键词",
     "navigationBarTextStyle":"black"
   }
 }
