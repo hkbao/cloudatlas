@@ -33,6 +33,8 @@ class CloudAtlas(object):
     def get_keywords(self, content):
         # First, eliminate stopwords
         # Use jieba to cut words
+        if content == "":
+            return {"你搜索的内容太小众了，没找到任何信息...": 1}
         tags = jieba.analyse.extract_tags(content, withWeight=True, topK=200)
         return dict(tags)
 
