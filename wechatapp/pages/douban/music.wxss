@@ -1,0 +1,7 @@
+/* music.wxss */
+@import "template.wxss";
+
+.post_img {
+  width: 80px;
+  height: 80px;
+}

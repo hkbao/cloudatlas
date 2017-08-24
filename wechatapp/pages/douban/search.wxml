@@ -1,0 +1,14 @@
+<!--search.wxml-->
+<view class="weui-cells__title">搜索结果 - {{qstr}}</view>
+<view class="weui-cells weui-cells_after-title" wx:if="{{searchResults.length}}" >
+  <navigator class="weui-cell weui-cell_access" url="./{{qtype}}?id={{item.id}}" wx:for="{{searchResults}}" wx:key="id" wx:if="{{item.year}}">
+      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+        <image src="{{item.image}}" mode="center" style="width: 65px; height: 65px; display: block"/>
+      </view>
+      <view class="weui-cell__bd">
+        <view>{{item.title}} {{item.alt_title}} ({{item.year}})</view>
+        <view style="font-size: 13px;color: #888888;">{{item.author}}/豆瓣评分: {{item.rating.average}}</view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+  </navigator>
+</view>

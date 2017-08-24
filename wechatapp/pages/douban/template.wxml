@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">{{info.title}} <text ws:if="{{info.year}}">({{info.year}})</text></view>
+    <view class="page__desc">豆瓣评分：{{info.rating.average}} ( {{info.rating.numRaters}} 人评价)</view>
+  </view>
+  <view class="page__bd page__bd_spacing">
+    <view class="weui-flex weui-article">
+      <view class="weui-flex__item">
+        <view class="weui-media-box__desc weui-article__p" wx:for="{{info.attrs}}" wx:key="{{item.attr_name}}"  wx:if="{{item.attr_value}}">
+          <text style="color: #000">{{item.attr_name}}:</text> {{item.attr_value}}
+        </view>
+      </view>
+      <view style="padding: 0 0 0 10px">
+        <image class="post_img" src="{{info.image}}" mode="aspectFit"></image>
+      </view>
+    </view>
+    <view class="weui-flex weui-article">
+      <view class="weui-flex__item">
+        <text type style="font-size: 14px; color: grey">豆瓣短评关键词:</text>
+        <view class="weui-loadmore" wx:if="{{imgLoading}}" style="padding-top: 40px;">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在生成你的关键词云图...</view>
+        </view>
+        <view>
+          <image src="{{imgUrl}}" mode="aspectFit" style="width: 100%; height: 210px;" bindload="bindCloudImageLoad"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-footer">
+    <view class="weui-footer__links">
+      <navigator url="../about/about" class="weui-footer__link">关于此程序</navigator>
+    </view>
+    <view class="weui-footer__text">Copyright © 2008-2018 project cloudatlas</view>
+  </view>
+</view>

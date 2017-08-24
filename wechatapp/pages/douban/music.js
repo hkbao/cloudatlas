@@ -1,4 +1,4 @@
-//movie.js
+//music.js
 var app = getApp()
 Page({
   data: {
@@ -6,7 +6,7 @@ Page({
     imgLoading: true,
     info: {}
   },
-  bindCloudImageLoad: function(e) {
+  bindCloudImageLoad: function (e) {
     this.setData({
       imgLoading: false
     })
@@ -15,7 +15,7 @@ Page({
     var that = this
     this.setData({
       id: option.id,
-      imgUrl: 'http://iamted.cc/app/wordcloud?t=movie&q=' + option.id
+      imgUrl: 'http://iamted.cc/app/wordcloud?t=music&q=' + option.id
     })
     wx.showToast({
       title: '正在获取信息',
@@ -23,42 +23,41 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: 'https://api.douban.com/v2/movie/' + option.id,
+      url: 'https://api.douban.com/v2/music/' + option.id,
       header: {
         'content-type': 'json'
       },
       success: function (res) {
         that.setData({
-          info: that.getMovieInfo(res.data)
+          info: that.getMusicInfo(res.data)
         });
         wx.hideToast()
       }
     })
   },
-  getMovieInfo: function (data) {
+  getMusicInfo: function (data) {
     var info = {
       title: data.title,
-      year: data.attrs.year[0],
+      year: data.attrs.pubdate[0],
       rating: data.rating,
       image: data.image.replace('/ipst/', '/mpst/'),
       attrs: [
-        {attr_name: "导演", attr_value: data.attrs.director},
-        {attr_name: "主演", attr_value: data.attrs.cast},
-        {attr_name: "类型", attr_value: data.attrs.movie_type},
-        {attr_name: "国家/地区", attr_value: data.attrs.country},
-        {attr_name: "上映日期", attr_value: data.attrs.pubdate},
-        { attr_name: "片长", attr_value: data.attrs.movie_duration}
+        { attr_name: "又名", attr_value: data.alt_title },
+        { attr_name: "表演者", attr_value: data.author[0].name },
+        { attr_name: "类型", attr_value: data.attrs.version },
+        { attr_name: "出版者", attr_value: data.attrs.publisher },
+        { attr_name: "发行时间", attr_value: data.attrs.pubdate },
       ]
     }
-    //Remove english names
-    for (var i in info.attrs) {
-      for (var j in info.attrs[i].attr_value) {
-        info.attrs[i].attr_value[j] = info.attrs[i].attr_value[j].split(' ')[0]
-      }
-      if (info.attrs[i].attr_value) {
-        info.attrs[i].attr_value = info.attrs[i].attr_value.slice(0, 5).join('/')
-      }
+    //generate tag
+    var tags = []
+    for (var i in data.tags) {
+      tags.push(data.tags[i].name)
     }
+    if (info.year) {
+      info.year = info.year.split('-')[0]
+    }
+    info.attrs.push({ attr_name: '标签', attr_value: tags.join('/') })
     return info
   },
 

@@ -2,12 +2,13 @@
 //获取应用实例
 var app = getApp()
 Page({
+  dataSourceNames: ['电影', '书籍', '音乐'],
+  suggestUrls: ['https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
+  placeHolders: ['电影,电视剧,综艺...', '书名,作者名', '歌曲名,专辑名'],
   data: {
-    dataSources: ['douban/movie'],
-    dataSourceNames: ['电影'],
-    suggestUrls: ['https://movie.douban.com/j/subject_suggest'],
-    placeHolders: ['电影,电视剧,综艺...'],
-    currentPlaceHolder: '电影,电视剧,综艺...',
+    dataSources: ['douban/movie', 'douban/book', 'douban/music'],
+    dataSourceNames: ['电影', '书籍', '音乐'],
+    placeHolders: ['电影,电视剧,综艺...', '书名,作者名', '歌曲名,专辑名'],
     searchSuggestions: [],
     dataSourceIndex: 0,
     qstr: ''
@@ -15,8 +16,9 @@ Page({
   //事件处理函数
   bindDataSourceChange: function(e) {
     this.setData({
-      dataSourceIndex: e.detail.value,
-      currentPlaceHolder: this.data.placeHolders[e.detail.value]
+      dataSourceIndex: parseInt(e.detail.value),
+      qstr: '',
+      searchSuggestions: []
     })
   },
   bindQueryStringInput: function(e) {
@@ -26,19 +28,45 @@ Page({
     this.searchSuggest(e.detail.value)
   },
   bindSearch: function(e) {
-    if (this.data.searchSuggestions.length > 0) {
-      var mid = this.data.searchSuggestions[0].id
-      var dataSource = this.data.dataSources[this.data.dataSourceIndex]
+    if (this.data.qstr) {
+      var searchUrl = this.data.dataSources[this.data.dataSourceIndex].split('/')[0]
+      var searchType = this.data.dataSources[this.data.dataSourceIndex].split('/')[1]
       wx.navigateTo({
-        url: '../' + dataSource + '?id=' + mid
+        url: '../' + searchUrl + '/search?q=' + this.data.qstr + '&type=' + searchType
       })
     }
   },
+  getSuggestData: function(data) {
+    var info = data
+    switch (this.data.dataSourceIndex) {
+      case 0:
+        break;
+      case 1:
+        for (var i in info) {
+          info[i].img = info[i].pic
+          info[i].sub_title = info[i].author_name
+        }
+        break;
+      case 2:
+        for (var i in info) {
+          info[i].img = info[i].pic
+          if (info[i].type == 's') {
+            info[i].year = '专辑'
+          }
+          if (info[i].performer) {
+            info[i].sub_title = info[i].performer.join('/')
+          }
+        }
+        break;
+      default:
+        break;
+    }
+    console.log(info)
+    return info
+  },
   searchSuggest: function(query) {
     var that = this
-    if (this.data.dataSourceIndex == 0) {
-      var suggestUrl = this.data.suggestUrls[0] + '?q=' + query
-    }
+    var suggestUrl = this.suggestUrls[this.data.dataSourceIndex] + '?q=' + query
     wx.request({
       url: suggestUrl,
       header: {
@@ -46,7 +74,7 @@ Page({
       },
       success: function (res) {
         that.setData({
-          searchSuggestions: res.data
+          searchSuggestions: that.getSuggestData(res.data)
         });
       }
     })

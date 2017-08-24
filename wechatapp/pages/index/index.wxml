@@ -1,38 +1,39 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
-    <view class="page__hd">
-        <view class="page__title">搜索你的关键词</view>
-        <view class="page__desc">选择数据源，并键入需要查询的内容</view>
+  <view class="page__hd weui-flex">
+    <view><image class="logo" src="/images/logo.png"></image></view>
+    <view class="flex-item">
+      <view class="page__title">搜索你的关键词</view>
+      <view class="page__desc">选择数据源，并键入需要查询的内容</view>
     </view>
-    <view class="page__bd">
-        <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示</view>
-        <view class="weui-cells__title">搜索</view>
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_select">
-                <view class="weui-cell__hd" style="width: 100px">
-                    <picker bindchange="bindDataSourceChange" value="{{dataSourceIndex}}" range="{{dataSourceNames}}">
-                        <view class="weui-select">{{dataSourceNames[dataSourceIndex]}}</view>
-                    </picker>
-                </view>
-                <view class="weui-cell__bd weui-cell__bd_in-select-before">
-                    <input class="weui-input" placeholder="{{currentPlaceHolder}}" bindinput="bindQueryStringInput" />
-                </view>
-                <view class="weui-cell__ft">
-                    <view class="weui-vcode-btn" bindtap="bindSearch" type="submit">搜索</view>
-                </view>
-            </view>
+  </view>
+  <view class="page__bd">
+    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd" style="width: 100px">
+          <picker bindchange="bindDataSourceChange" value="{{dataSourceIndex}}" range="{{dataSourceNames}}">
+            <view class="weui-select">{{dataSourceNames[dataSourceIndex]}}</view>
+          </picker>
         </view>
-        <view class="weui-cells weui-cells_after-title" wx:if="{{searchSuggestions.length}}" >
-          <view class="weui-cell" wx:for="{{searchSuggestions}}" wx:key="id" wx:if="{{item.year}}">
+        <view class="weui-cell__bd weui-cell__bd_in-select-before">
+          <input class="weui-input" placeholder="{{placeHolders[dataSourceIndex]}}" bindinput="bindQueryStringInput" />
+        </view>
+        <view class="weui-cell__ft">
+          <view class="weui-vcode-btn" bindtap="bindSearch" type="submit">搜索</view>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{qstr && searchSuggestions.length}}" >
+        <navigator class="weui-cell weui-cell_access" url="../{{dataSources[dataSourceIndex]}}?id={{item.id}}" wx:for="{{searchSuggestions}}" wx:key="id" wx:if="{{item.year}}">
             <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-              <image src="{{item.img}}" mode="center" style="width: 65px; height: 65px; display: block"/>
+              <image src="{{item.img}}" mode="center" style="width: 50px; height: 50px; display: block"/>
             </view>
             <view class="weui-cell__bd">
-              <navigator url="../douban/movie?id={{item.id}}">
-                <view>{{item.title}} ({{item.year}})</view>
-                <view style="font-size: 13px;color: #888888;">{{item.sub_title}}</view>
-              </navigator>
+              <view>{{item.title}} ({{item.year}})</view>
+              <view style="font-size: 13px;color: #888888;">{{item.sub_title}}</view>
             </view>
-          </view>
-        </view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
     </view>
+  </view>
 </view>

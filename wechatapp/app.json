@@ -1,13 +1,16 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
+    "pages/douban/search",
     "pages/douban/movie",
-    "pages/logs/logs"
+    "pages/douban/book",
+    "pages/logs/logs",
+    "pages/douban/music"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "你的关键词",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   }
 }
