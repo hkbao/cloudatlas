@@ -1,6 +1,6 @@
 from cloudatlas import CloudAtlas
 from wechat.handler import wechat_auth, handle_msg
-from douban import DoubanMovie
+from douban import DoubanMovie, DoubanBook, DoubanMusic
 from flask import Flask
 from flask import json
 from flask import request
@@ -28,9 +28,13 @@ def get_wordcloud():
     try:
         if qtype == "movie":
             obj = DoubanMovie(query)
+        elif qtype == "book":
+            obj = DoubanBook(query)
+        elif qtype == "music":
+            obj = DoubanMusic(query)
         else:
             raise Exception("Unknown type: " + type)
-        ca = CloudAtlas(obj)
+        ca = CloudAtlas(obj, request.args.get("refresh", False))
     except Exception as e:
         return str(e)
     else:
