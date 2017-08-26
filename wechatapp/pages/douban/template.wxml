@@ -18,7 +18,7 @@
     <view class="weui-flex weui-article">
       <view class="weui-flex__item">
         <text type style="font-size: 14px; color: grey">豆瓣短评关键词:</text>
-        <view class="weui-loadmore" wx:if="{{imgLoading}}" style="padding-top: 40px;">
+        <view class="weui-loadmore" wx:if="{{imgLoading}}" style="width: 100%; height: 210px;">
           <view class="weui-loading"></view>
           <view class="weui-loadmore__tips">正在生成你的关键词云图...</view>
         </view>
@@ -31,6 +31,7 @@
   <view class="weui-footer">
     <view class="weui-footer__links">
       <navigator url="../about/about" class="weui-footer__link">关于此程序</navigator>
+      <text bindtap="shareThisPage" class="weui-footer__link">分享此页面</text>
     </view>
     <view class="weui-footer__text">Copyright © 2008-2018 project cloudatlas</view>
   </view>

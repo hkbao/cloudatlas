@@ -1,4 +1,5 @@
 //music.js
+var share = require('share.js')
 var app = getApp()
 Page({
   data: {
@@ -11,6 +12,7 @@ Page({
       imgLoading: false
     })
   },
+  shareThisPage: share.sharePage,
   onLoad: function (option) {
     var that = this
     this.setData({

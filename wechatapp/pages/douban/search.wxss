@@ -1,1 +1,12 @@
 /* search.wxss */
+.weui-panel {
+  margin-top: -1px;
+}
+
+.weui-media-box {
+  border-top: 1rpx solid #e5e5e5;
+}
+
+.weui-media-box::before {
+  border-top: none;
+}

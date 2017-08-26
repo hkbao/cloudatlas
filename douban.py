@@ -26,7 +26,6 @@ class Douban(object):
         def get_comment_page(url):
             resp = requests.get(url)
             if resp.status_code != 200:
-                print resp.status_code
                 return
             data = BeautifulSoup(resp.text, "html.parser")
             for comment in data.find_all("div", class_="comment"):
@@ -60,7 +59,11 @@ class DoubanMovie(Douban):
         info["mid"] = self.id
         info["image"] = info["image"].replace("/ipst/", "/mpst/")
         for key in info["attrs"]:
-            info["attrs"][key] = "/".join([attr.split(" ")[0] for attr in info["attrs"][key][0:5]])
+            info["attrs"][key] = u"/".join([attr.split(" ")[0] for attr in info["attrs"][key][0:5]])
+        info["title_str"] = info["title"] + u" (%s)" % info["attrs"]["year"]
+        info["attrs_str"] = u"%s (导演)/%s" % (info["attrs"]["director"], "/".join([info["attrs"]["cast"],\
+            info["attrs"]["movie_type"], info["attrs"]["country"], info["attrs"]["movie_duration"]]))
+        info["rating_str"] = u"豆瓣评分: %s (共 %d 人评价)" % (info["rating"]["average"], info["rating"]["numRaters"])
         return info
 
     def get_comment_page_url(self, page_num):
@@ -81,6 +84,10 @@ class DoubanBook(Douban):
         resp = requests.get(self.api_url + "/book/" + self.id)
         resp.raise_for_status()
         info = resp.json()
+        info["title_str"] = info["title"] + u" (%s)" % info.get("pubdate")
+        info["attrs_str"] = u"%s (作者)/%s/%s" % ("/".join(info["author"]), info["publisher"], \
+            info.get("price", ""))
+        info["rating_str"] = u"豆瓣评分: %s (共 %d 人评价)" % (info["rating"]["average"], info["rating"]["numRaters"])
         return info
 
     def get_comment_page_url(self, page_num):
@@ -101,6 +108,10 @@ class DoubanMusic(Douban):
         resp = requests.get(self.api_url + "/music/" + self.id)
         resp.raise_for_status()
         info = resp.json()
+        info["title_str"] = info["title"]
+        info["attrs_str"] = u"%s (音乐人)/%s/%s" % (info["author"][0]["name"], info["attrs"]["version"][0],\
+            info["attrs"]["publisher"][0])
+        info["rating_str"] = u"豆瓣评分: %s (共 %d 人评价)" % (info["rating"]["average"], info["rating"]["numRaters"])
         return info
 
     def get_comment_page_url(self, page_num):
