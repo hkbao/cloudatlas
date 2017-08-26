@@ -5,14 +5,6 @@ import hashlib
 import jieba.analyse
 from wordcloud import WordCloud
 from PIL import Image, ImageDraw, ImageFont
-import douban
-
-try:
-    import matplotlib.pyplot as plt
-except:
-    import matplotlib
-    matplotlib.use("agg", warn=False, force=True)
-    from matplotlib import pyplot as plt
 
 try:
     import configparser
@@ -20,7 +12,7 @@ try:
     config.read("config.conf")
     cache_path = config["cache_path"]
 except Exception:
-    cache_path = "./cached-files"
+    cache_path = "/home/ec2-user/cached-files"
 finally:
     if not os.path.exists(cache_path):
         os.mkdir(cache_path)
@@ -46,9 +38,6 @@ class CloudAtlas(object):
         wc = WordCloud(font_path=os.path.join(get_script_path(), "yahei.ttf"), \
             width=680, height=400, background_color="white", max_font_size=150)
         wc = wc.fit_words(self.get_keywords(content))
-        plt.imshow(wc)
-        plt.axis("off")
-        plt.figure()
         wc.to_file(filepath)
 
     def get_cloud_img(self):
@@ -92,6 +81,7 @@ class CloudAtlas(object):
             return False
 
 if __name__ == "__main__":
-    movie = douban.DoubanBook("27068494")
-    wc = CloudAtlas(movie, watermark=True)
-    wc.get_cloud_img()
+    pass
+    #movie = douban.DoubanBook("27068494")
+    #wc = CloudAtlas(movie, watermark=True)
+    #wc.get_cloud_img()
