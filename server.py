@@ -34,7 +34,7 @@ def get_wordcloud():
             obj = DoubanMusic(query)
         else:
             raise Exception("Unknown type: " + type)
-        ca = CloudAtlas(obj, request.args.get("refresh", False))
+        ca = CloudAtlas(obj, request.args.get("refresh", False), request.args.get("watermark", False))
     except Exception as e:
         return str(e)
     else:
