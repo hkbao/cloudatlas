@@ -2,27 +2,13 @@
 import os
 import time
 import hashlib
+from config import cache_path
 import jieba.analyse
 from wordcloud import WordCloud
 from PIL import Image, ImageDraw, ImageFont
 
-try:
-    import matplotlib.pyplot as plt
-except:
-    import matplotlib
-    matplotlib.use("agg", warn=False, force=True)
-    from matplotlib import pyplot as plt
-
-try:
-    import configparser
-    config = configparser.ConfigParser()
-    config.read("config.conf")
-    cache_path = config["cache_path"]
-except Exception:
-    cache_path = "/home/ec2-user/cached-files"
-finally:
-    if not os.path.exists(cache_path):
-        os.mkdir(cache_path)
+if not os.path.exists(cache_path):
+    os.mkdir(cache_path)
 
 def get_script_path():
     return os.path.dirname(os.path.realpath(__file__))
@@ -32,6 +18,7 @@ class CloudAtlas(object):
         self.obj = obj
         self.rebuild = rebuild
         self.watermark = watermark
+        self.font = os.path.join(get_script_path(), "HiraginoW3.otf")
 
     def get_keywords(self, content):
         # First, eliminate stopwords
@@ -42,7 +29,7 @@ class CloudAtlas(object):
         return dict(tags)
 
     def get_keyword_cloud(self, content, filepath):
-        wc = WordCloud(font_path=os.path.join(get_script_path(), "yahei.ttf"), \
+        wc = WordCloud(font_path=self.font, \
             width=680, height=400, background_color="white", max_font_size=150)
         wc = wc.fit_words(self.get_keywords(content))
         wc.to_file(filepath)
@@ -65,7 +52,7 @@ class CloudAtlas(object):
 
     def add_watermark(self, img_path, cache_file_wm):
         info = self.obj.get_basic_info()
-        font = os.path.join(get_script_path(), "yahei.ttf")
+        font = self.font
         baseim = Image.open(os.path.join(get_script_path(), "images", "watermark.png"))
         wordim = Image.open(img_path)
         textim = Image.new('RGB', (680, 180), (255, 255, 255))

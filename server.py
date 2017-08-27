@@ -1,15 +1,24 @@
 from cloudatlas import CloudAtlas
 from wechat.handler import wechat_auth, handle_msg
 from douban import DoubanMovie, DoubanBook, DoubanMusic
+from config import env, cache_path
 from flask import Flask
 from flask import json
 from flask import request
+from flask import redirect
 from flask import send_file
 from flask import render_template
+import os.path
 app = Flask(__name__)
 
-@app.route("/app", methods=["GET", "POST"])
+cache_path_length = len("/".join(cache_path.split("/")[0:-1]))
+
+@app.route("/app", methods=["GET"])
 def main():
+    return "Hello! Welcome to Ted's APP"
+
+@app.route("/app/wechat", methods=["GET", "POST"])
+def wechat():
     if request.method == "GET":
         if wechat_auth(request):
             return request.args.get("echostr", "")
@@ -38,7 +47,10 @@ def get_wordcloud():
     except Exception as e:
         return str(e)
     else:
-        return send_file(ca.get_cloud_img(), mimetype="image/png")
+        if env == "production":
+            return redirect(ca.get_cloud_img()[cache_path_length:], code=302)
+        else:
+            return send_file(ca.get_cloud_img(), mimetype="image/png")
 
 @app.route("/app/movie/<name>", methods=["GET"])
 def get_movie(name):
@@ -48,14 +60,3 @@ def get_movie(name):
         return render_template('movie_info.html', **basic_info)
     except Exception as e:
         return str(e)
-
-#@app.route("/app/movie2/<name>", methods=["GET"])
-#def get_movie2(name):
-#    try:
-#        movie = DoubanMovie(name=name)
-#        if request.args.get("accept") == "json":
-#            return json.dumps(movie.get_basic_info())
-#        else:
-#            return render_template('movie_info2.html', **movie.__dict__)
-#    except Exception as e:
-#        return str(e)
