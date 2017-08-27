@@ -17,7 +17,7 @@ Page({
     var that = this
     this.setData({
       id: option.id,
-      imgUrl: 'http://iamted.cc/app/wordcloud?t=movie&q=' + option.id
+      imgUrl: 'http://101.132.46.130/app/wordcloud?t=movie&q=' + option.id
     })
     wx.showToast({
       title: '正在获取信息',
@@ -67,20 +67,5 @@ Page({
   /**
   * 用户点击右上角分享
   */
-  onShareAppMessage: function (res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
-    return {
-      title: '你的关键词 - 电影 ' + this.data.info.title,
-      path: '/douban/movie?id=' + this.data.mid,
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
-    }
-  }
+  onShareAppMessage: share.shareApp
 })

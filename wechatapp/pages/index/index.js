@@ -17,9 +17,9 @@ Page({
   bindDataSourceChange: function(e) {
     this.setData({
       dataSourceIndex: parseInt(e.detail.value),
-      qstr: '',
       searchSuggestions: []
     })
+    this.searchSuggest(this.data.qstr)
   },
   bindQueryStringInput: function(e) {
     this.setData({
@@ -77,6 +77,11 @@ Page({
           searchSuggestions: that.getSuggestData(res.data)
         });
       }
+    })
+  },
+  shareApp: function() {
+    wx.showShareMenu({
+      withShareTicket: true
     })
   },
   onLoad: function() {

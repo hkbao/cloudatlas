@@ -1,4 +1,6 @@
-<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+<import src="../common/foot.wxml" />
+
+<view class="page container" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__hd weui-flex">
     <view><image class="logo" src="/images/logo.png"></image></view>
     <view class="flex-item">
@@ -38,4 +40,5 @@
       </view>
     </view>
   </view>
+  <template is="foot" data="{{imgLoading: true}}"/>
 </view>

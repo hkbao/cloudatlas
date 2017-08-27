@@ -7,6 +7,13 @@ from wordcloud import WordCloud
 from PIL import Image, ImageDraw, ImageFont
 
 try:
+    import matplotlib.pyplot as plt
+except:
+    import matplotlib
+    matplotlib.use("agg", warn=False, force=True)
+    from matplotlib import pyplot as plt
+
+try:
     import configparser
     config = configparser.ConfigParser()
     config.read("config.conf")
