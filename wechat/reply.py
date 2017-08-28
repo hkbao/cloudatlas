@@ -25,7 +25,7 @@ class TextMsg(Msg):
         </xml>
         """
         return XmlForm.format(**self.__dict)
-    
+
 class ImageMsg(Msg):
     def __init__(self, toUserName, fromUserName, mediaId):
         self.__dict = dict()
@@ -59,9 +59,9 @@ class ImageTextMsg(Msg):
         self.__dict['MovieTitle'] = "%s (%s)" % (info['title'], info['attrs']['year'])
         self.__dict['MovieDescription'] = "导演:%s|主演:%s|类型:%s|豆瓣评分:%s" % \
             (info['attrs'].get('director'), info['attrs'].get('cast',''), info['attrs'].get('movie_type'), info['rating'].get('average'))
-        self.__dict['MoviePic'] = "http://iamted.cc/app/wordcloud?q=%s&t=movie" % info['mid']
-        self.__dict['url'] = "http://iamted.cc/app/movie/" + info['mid']
- 
+        self.__dict['MoviePic'] = "https://cloudatlas.applinzi.com/app/wordcloud?q=%s&t=movie" % info['mid']
+        self.__dict['url'] = "http://cloudatlas.applinzi.com/app/movie/" + info['mid']
+
     def send(self):
         XmlForm = """
         <xml>
