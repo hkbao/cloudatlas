@@ -7,7 +7,8 @@ class Douban(object):
     def __init__(self):
         self.base_url = "https://www.douban.com"
         self.api_url  = "https://api.douban.com/v2"
-        self.resource = ""
+        self.resource = "douban"
+        self.category = ""
 
     def search_resource(self, name):
         resp = requests.get(self.base_url + "/j/subject_suggest", params={"q": name})
@@ -18,7 +19,7 @@ class Douban(object):
             self.id = data[0]["id"]
             self.url = self.base_url + "/subject/" + self.id
         else:
-            raise Exception("%s resource not found according to the keyword \"%s\"" % (self.resource, name))
+            raise Exception("%s not found according to the keyword \"%s\"" % (self.category, name))
 
     def get_comments(self):
         comments = []
@@ -40,12 +41,15 @@ class Douban(object):
 
     def get_content(self):
         return "".join(self.get_comments())
+    
+    def get_file_name(self):
+        return "/".join([self.resource, self.category, self.id])
 
 class DoubanMovie(Douban):
     def __init__(self, name):
         super(DoubanMovie, self).__init__()
         self.base_url = "https://movie.douban.com"
-        self.resource = "movie"
+        self.category = "movie"
         if name.isdigit() and int(name) > 10000:
             self.id = str(name)
             self.url = self.base_url + "/subject/" + self.id
@@ -73,7 +77,7 @@ class DoubanBook(Douban):
     def __init__(self, name):
         super(DoubanBook, self).__init__()
         self.base_url = "https://book.douban.com"
-        self.resource = "book"
+        self.category = "book"
         if name.isdigit() and int(name) > 10000:
             self.id = str(name)
             self.url = self.base_url + "/subject/" + self.id
@@ -97,7 +101,7 @@ class DoubanMusic(Douban):
     def __init__(self, name):
         super(DoubanMusic, self).__init__()
         self.base_url = "https://music.douban.com"
-        self.resource = "music"
+        self.category = "music"
         if name.isdigit() and int(name) > 10000:
             self.id = str(name)
             self.url = self.base_url + "/subject/" + self.id

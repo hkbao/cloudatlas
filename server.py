@@ -1,7 +1,7 @@
 from cloudatlas import CloudAtlas
 from wechat.handler import wechat_auth, handle_msg
 from douban import DoubanMovie, DoubanBook, DoubanMusic
-from config import env, cache_path
+from config import env
 from flask import Flask
 from flask import json
 from flask import request
@@ -11,7 +11,6 @@ from flask import render_template
 import os.path
 app = Flask(__name__)
 
-cache_path_length = len("/".join(cache_path.split("/")[0:-1]))
 
 @app.route("/app", methods=["GET"])
 def main():
@@ -48,9 +47,9 @@ def get_wordcloud():
         return str(e)
     else:
         if env == "production":
-            return redirect(ca.get_cloud_img()[cache_path_length:], code=302)
+            return redirect(ca.get_cloud_img_url(), code=302)
         else:
-            return send_file(ca.get_cloud_img(), mimetype="image/png")
+            return send_file(ca.get_cloud_img_url(), mimetype="image/png")
 
 @app.route("/app/movie/<name>", methods=["GET"])
 def get_movie(name):

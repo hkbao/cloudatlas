@@ -1,0 +1,5 @@
+oss-cn-shanghai.aliyuncs.com
+cloudatlas-cache
+id
+secret
+
