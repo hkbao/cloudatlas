@@ -47,6 +47,15 @@ class CloudAtlas(object):
             file_name = self.get_watermark_img()
         return cache.get_url(file_name)
 
+    def get_keyword_data(self):
+        file_name = self.obj.get_file_name() + '.txt'
+        if self.rebuild or not cache.exists(file_name, 3600):
+            data = json.dumps(self.get_keywords(self.obj.get_content()))
+            cache.put(file_name, data, obj_type='txt')
+        else:
+            data = cache.get(file_name).read()
+        return data
+
     def get_watermark_img(self):
         file_name = self.obj.get_file_name() + '.png'
         file_name_wm = self.obj.get_file_name() + '_wm.png'

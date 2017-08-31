@@ -13,18 +13,22 @@ class LocalCache(object):
         if not os.path.exists(cache_path):
             os.mkdir(cache_path)
         self.cache_path = cache_path
-    
+
     def put(self, file_name, file_obj, obj_type='png'):
         full_path = os.path.join(self.cache_path, file_name)
         if not os.path.exists(os.path.dirname(full_path)):
             os.makedirs(os.path.dirname(full_path))
-       	with open(full_path, 'wb') as f:
-            f.write(file_obj.getvalue())
+        if obj_type == 'png':
+       	    with open(full_path, 'wb') as f:
+                f.write(file_obj.getvalue())
+        else:
+            with open(full_path, 'w') as f:
+                f.write(file_obj)
 
     def get(self, file_name):
         full_path = os.path.join(self.cache_path, file_name)
         return open(full_path, 'rb')
-    
+
     def exists(self, file_name, mtime=None):
         full_path = os.path.join(self.cache_path, file_name)
         if os.path.exists(full_path):
@@ -34,7 +38,7 @@ class LocalCache(object):
                 return True
         else:
             return False
-    
+
     def get_url(self, file_name):
         return os.path.join('/', os.path.basename(self.cache_path), file_name)
 
@@ -46,13 +50,13 @@ class OSSCache(object):
         self.service = oss2.Service(self.auth, endpoint)
         self.bucket = oss2.Bucket(self.auth, endpoint, bucket)
         self.cache_url = 'https://%s.%s/' % (bucket, endpoint)
-    
+
     def put(self, file_name, file_obj, obj_type='image/png'):
         self.bucket.put_object(file_name, file_obj.getvalue(), headers={'Content-Type': obj_type, 'x-oss-object-acl': 'public-read'})
 
     def get(self, file_name):
         return self.bucket_get_object(file_name)
-    
+
     def exists(self, file_name, mtime=None):
         return self.bucket.object_exists(file_name)
 
