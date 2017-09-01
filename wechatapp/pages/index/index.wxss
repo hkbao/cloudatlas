@@ -33,3 +33,11 @@
 .weui-media-box::before {
   border-top: none;
 }
+
+.canvas {
+  width: 96%;
+  height: 320px;
+  margin: 20px;
+  padding: auto;
+  background-color: #fff;
+}

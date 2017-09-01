@@ -1,0 +1,3 @@
+<template name="wccanvas">
+<canvas canvas-id="wccanvas" class="canvas"></canvas>
+</template>

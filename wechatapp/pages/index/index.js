@@ -1,25 +1,26 @@
 //index.js
 //获取应用实例
-var app = getApp()
+var wccanvas = require('../common/wccanvas.js')
 Page({
-  dataSourceNames: ['电影', '书籍', '音乐'],
-  suggestUrls: ['https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
-  placeHolders: ['电影,电视剧,综艺...', '书名,作者名', '歌曲名,专辑名'],
+  suggestUrls: ['', 'https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
   data: {
-    dataSources: ['douban/movie', 'douban/book', 'douban/music'],
-    dataSourceNames: ['电影', '书籍', '音乐'],
-    placeHolders: ['电影,电视剧,综艺...', '书名,作者名', '歌曲名,专辑名'],
+    dataSources: ['baidu/news', 'douban/movie', 'douban/book', 'douban/music'],
+    dataSourceNames: ['新闻', '电影', '书籍', '音乐'],
+    placeHolders: ['人物,事件,地点', '电影,电视剧,综艺', '书名,作者名', '歌曲名,专辑名'],
     searchSuggestions: [],
     dataSourceIndex: 0,
     qstr: ''
   },
   //事件处理函数
   bindDataSourceChange: function(e) {
+    console.log(e.detail.value)
     this.setData({
-      dataSourceIndex: parseInt(e.detail.value),
+      dataSourceIndex: e.detail.value,
       searchSuggestions: []
     })
-    this.searchSuggest(this.data.qstr)
+    if (this.data.qstr != '') {
+      this.searchSuggest(this.data.qstr)
+    }
   },
   bindQueryStringInput: function(e) {
     this.setData({
@@ -40,14 +41,15 @@ Page({
     var info = data
     switch (this.data.dataSourceIndex) {
       case 0:
-        break;
       case 1:
+        break;
+      case 2:
         for (var i in info) {
           info[i].img = info[i].pic
           info[i].sub_title = info[i].author_name
         }
         break;
-      case 2:
+      case 3:
         for (var i in info) {
           info[i].img = info[i].pic
           if (info[i].type == 's') {
@@ -86,5 +88,6 @@ Page({
   },
   onLoad: function() {
     console.log('onLoad')
+    wccanvas.getTopNews()
   }
 })

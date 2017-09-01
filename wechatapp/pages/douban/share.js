@@ -1,8 +1,8 @@
 var sharePage = function (e) {
-  captureImage(this.data.imgUrl)
+  captureImage(this.data.imgUrl.replace('http://101.132.46.130', 'https://cloudatlas.applinzi.com'), this.data.info)
 }
 
-var captureImage = function(imgUrl) {
+var captureImage = function(imgUrl, info) {
   wx.showModal({
     content: '点击确定把云图保存到相册，由于微信暂不支持小程序直接分享到朋友圈，如果喜欢本程序，请手动分享。',
     showCancel: true,
@@ -15,7 +15,7 @@ var captureImage = function(imgUrl) {
           duration: 10000
         });
         wx.downloadFile({
-          url: imgUrl + '&watermark=true',
+          url: imgUrl + '&watermark=' + JSON.stringify(info),
           success: function (res) {
             wx.saveImageToPhotosAlbum({
               filePath: res.tempFilePath,
@@ -34,7 +34,7 @@ var captureImage = function(imgUrl) {
           },
           fail: function (res) {
             wx.showToast({
-              title: '截图错误',
+              title: res.data,
               icon: 'loading',
               duration: 3000
             });
