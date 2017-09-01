@@ -5,6 +5,7 @@ from baidu import BaiduNews
 from config import env
 from flask import Flask
 from flask import json
+from flask import jsonify
 from flask import request
 from flask import redirect
 from flask import send_file
@@ -67,7 +68,7 @@ def get_kwdata():
     except Exception as e:
         return str(e)
     else:
-        return ca.get_keyword_data()
+        return jsonify(ca.get_keyword_data())
 
 @app.route('/app/movie/<name>', methods=['GET'])
 def get_movie(name):

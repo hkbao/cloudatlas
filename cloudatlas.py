@@ -50,10 +50,10 @@ class CloudAtlas(object):
     def get_keyword_data(self):
         file_name = self.obj.get_file_name() + '.txt'
         if self.rebuild or not cache.exists(file_name, 3600):
-            data = json.dumps(self.get_keywords(self.obj.get_content()))
-            cache.put(file_name, data, obj_type='txt')
+            data = self.get_keywords(self.obj.get_content())
+            cache.put(file_name, json.dumps(data), obj_type='txt')
         else:
-            data = cache.get(file_name).read()
+            data = json.load(cache.get(file_name, file_type='txt'))
         return data
 
     def get_watermark_img(self):
@@ -69,9 +69,11 @@ class CloudAtlas(object):
         wordim = Image.open(cache.get(img_path))
         textim = Image.new('RGB', (680, 180), (255, 255, 255))
         textim_dr = ImageDraw.Draw(textim)
-        textim_dr.text((10, 10), self.watermark.get('title', ''), font=ImageFont.truetype(font, 36), fill='#000000')
-        textim_dr.text((10, 70), self.watermark.get('rating', ''), font=ImageFont.truetype(font, 18), fill='#000000')
-        textim_dr.text((10, 160), u'以下是根据豆瓣短评生成的关键词云图', font=ImageFont.truetype(font, 14), fill='#0f0f0f')
+        title = self.watermark.get('title', '')
+        rating = '豆瓣评分: ' + str(self.watermark.get('rating', {}).get('average',''))
+        textim_dr.text((10, 40), title, font=ImageFont.truetype(font, 40), fill='#000000')
+        textim_dr.text((10, 100), rating, font=ImageFont.truetype(font, 24), fill='#000000')
+        textim_dr.text((10, 150), u'以下是根据豆瓣短评生成的关键词云图', font=ImageFont.truetype(font, 16), fill='#0f0f0f')
         baseim.paste(wordim, (10, 200, 690, 600))
         baseim.paste(textim, (10, 10, 690, 190))
         data = BytesIO()

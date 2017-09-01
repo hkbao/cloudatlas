@@ -25,9 +25,12 @@ class LocalCache(object):
             with open(full_path, 'w') as f:
                 f.write(file_obj)
 
-    def get(self, file_name):
+    def get(self, file_name, file_type='binary'):
         full_path = os.path.join(self.cache_path, file_name)
-        return open(full_path, 'rb')
+        if file_type == 'binary':
+            return open(full_path, 'rb')
+        else:
+            return open(full_path, 'r')
 
     def exists(self, file_name, mtime=None):
         full_path = os.path.join(self.cache_path, file_name)

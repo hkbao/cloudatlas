@@ -43,4 +43,4 @@ class BaiduNews(Baidu):
 
 if __name__ == '__main__':
     bn = BaiduNews()
-    print bn.get_content()
+    print(bn.get_content())
