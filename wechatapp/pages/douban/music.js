@@ -40,15 +40,12 @@ Page({
   getMusicInfo: function (data) {
     var info = {
       title: data.title,
-      year: data.attrs.pubdate[0],
       rating: data.rating,
       image: data.image.replace('/ipst/', '/mpst/'),
+      banner: data.image.replace('/ipst/', '/mpst/'),
       attrs: [
-        { attr_name: "又名", attr_value: data.alt_title },
-        { attr_name: "表演者", attr_value: data.author[0].name },
-        { attr_name: "类型", attr_value: data.attrs.version },
-        { attr_name: "出版者", attr_value: data.attrs.publisher },
-        { attr_name: "发行时间", attr_value: data.attrs.pubdate },
+        data.author[0].name + '/' + data.attrs.pubdate,
+        data.attrs.version + '/' + data.attrs.publisher
       ]
     }
     //generate tag
@@ -56,10 +53,7 @@ Page({
     for (var i in data.tags) {
       tags.push(data.tags[i].name)
     }
-    if (info.year) {
-      info.year = info.year.split('-')[0]
-    }
-    info.attrs.push({ attr_name: '标签', attr_value: tags.join('/') })
+    info.attrs.push(tags.join('/'))
     return info
   },
 

@@ -40,10 +40,32 @@
         </navigator>
       </view>
     </view>
-    <view class="weui-panel__bd" style="margin-top: 20px;" wx:if="{{dataSourceIndex == 0}}">
+    <view class="weui-article" wx:if="{{qstr == '' && dataSourceIndex == 0}}" style="padding: 5px 15px;">
+      <view><text type style="font-size: 12px; color: grey">正在热映:</text></view>
+      <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll">
+        <view wx:for="{{movieInTheaters}}" wx:key="index" class="scroll-view-item_H">
+          <navigator url="../douban/movie?id={{item.id}}">
+            <view><image src="{{item.images.medium}}"></image></view>
+            <view>{{item.title}}</view>
+            <!--<view style="width: 100%">{{item.rating.average}}</view>-->
+          </navigator>
+        </view>
+      </scroll-view>
+      <view><text type style="font-size: 12px; color: grey">北美票房排行榜:</text></view>
+      <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll">
+        <view wx:for="{{movieUSBox}}" wx:key="index" class="scroll-view-item_H">
+          <navigator url="../douban/movie?id={{item.subject.id}}">
+            <view><image src="{{item.subject.images.medium}}"></image></view>
+            <view>{{item.subject.title}}</view>
+            <!--<view>{{item.subject.rating.average}}</view>-->
+          </navigator>
+        </view>
+      </scroll-view>
+    </view>
+    <!--<view class="weui-panel__bd" style="margin-top: 20px;" wx:if="{{dataSourceIndex == 0}}">
       <template is="wccanvas"/>
       <view style="width: 100%; text-align: center"><text style="font-size: 12px; color: grey;">今日新闻关键词</text></view>
-    </view>
+    </view>-->
   </view>
   <template is="foot" data="{{imgLoading: true}}"/>
 </view>

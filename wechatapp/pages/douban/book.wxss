@@ -1,7 +1,7 @@
 /* book.wxss */
 @import "template.wxss";
 
-.post_img {
+.post-img {
   width: 107px;
   height: 146px;
 }

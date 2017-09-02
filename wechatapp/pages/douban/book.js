@@ -41,15 +41,13 @@ Page({
   getBookInfo: function (data) {
     var info = {
       title: data.title,
-      year: data.pubdate,
       rating: data.rating,
       image: data.image,
+      banner: data.image,
       attrs: [
-        { attr_name: "作者", attr_value: data.author.join('/') },
-        { attr_name: "出版社", attr_value: data.publisher },
-        { attr_name: "出版时间", attr_value: data.pubdate },
-        { attr_name: "页数", attr_value: data.pages },
-        { attr_name: "定价", attr_value: data.price }
+        data.author.join('/') + '(作者)/' + data.pubdate,
+        data.publisher,
+        data.pages + '页/￥' + data.price + ''
       ]
     }
     return info

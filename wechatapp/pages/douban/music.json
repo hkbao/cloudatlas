@@ -1,6 +1,6 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarBackgroundColor": "#fff",
+  "navigationBarBackgroundColor": "#f2901c",
   "navigationBarTitleText": "你的音乐关键词",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "#f0f3ef"
 }

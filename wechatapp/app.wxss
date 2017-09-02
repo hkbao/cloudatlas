@@ -57,3 +57,13 @@ image.weui-footer__image {
   width: 20px;
   margin-bottom: -3px;
 }
+
+.placeholder {
+    margin: 5px;
+    padding: 0 10px;
+    text-align: center;
+    height: 1.6em;
+    line-height: 1.6em;
+    color: #888888;
+    font-size: 12px;
+}

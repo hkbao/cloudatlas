@@ -1,6 +1,6 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarBackgroundColor": "#fff",
+  "navigationBarBackgroundColor": "#258dcd",
   "navigationBarTitleText": "你的电影关键词",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "#f0f3f5"
 }

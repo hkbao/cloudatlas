@@ -1,6 +1,6 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarBackgroundColor": "#fff",
+  "navigationBarBackgroundColor": "#5a4129",
   "navigationBarTitleText": "你的阅读关键词",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "#f6f6f1"
 }

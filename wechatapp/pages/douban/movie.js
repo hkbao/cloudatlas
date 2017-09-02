@@ -4,6 +4,7 @@ var app = getApp()
 Page({
   data: {
     id: '',
+    screenCap: false,
     imgLoading: true,
     info: {}
   },
@@ -42,26 +43,35 @@ Page({
       title: data.title,
       year: data.attrs.year[0],
       rating: data.rating,
+      star: parseInt(parseFloat(data.rating.average) + 0.5),
       image: data.image.replace('/ipst/', '/mpst/'),
+      banner: data.image.replace('/ipst/', '/lpst/'),
       attrs: [
-        {attr_name: "导演", attr_value: data.attrs.director},
-        {attr_name: "主演", attr_value: data.attrs.cast},
-        {attr_name: "类型", attr_value: data.attrs.movie_type},
-        {attr_name: "国家/地区", attr_value: data.attrs.country},
-        {attr_name: "上映日期", attr_value: data.attrs.pubdate},
-        { attr_name: "片长", attr_value: data.attrs.movie_duration}
+        '',
+        data.attrs.movie_duration + ' ' + data.attrs.movie_type.join('/'),
+        data.attrs.pubdate.pop() + ' ' + data.attrs.country.join('/')
       ]
     }
+
     //Remove english names
-    for (var i in info.attrs) {
-      for (var j in info.attrs[i].attr_value) {
-        info.attrs[i].attr_value[j] = info.attrs[i].attr_value[j].split(' ')[0]
-      }
-      if (info.attrs[i].attr_value) {
-        info.attrs[i].attr_value = info.attrs[i].attr_value.slice(0, 5).join('/')
-      }
+    var casts = data.attrs.cast.slice(0,3)
+    if (data.attrs.director) {
+      casts.splice(0, 0, data.attrs.director.join(' '))
+    }
+    for (var i in casts) {
+      casts[i] = casts[i].split(' ')[0]
+      if (i == 0) { casts[i] += '(导演)' }
+    }
+    info.attrs[0] = casts.join('/')
+    if (!this.hasChineseChar(info.title)) {
+      info.title = data.alt_title.split('/')[0]
     }
     return info
+  },
+
+  hasChineseChar: function(str) {
+    var reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g');
+    return reg.test(str);
   },
 
   /**

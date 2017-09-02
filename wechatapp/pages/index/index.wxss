@@ -41,3 +41,29 @@
   padding: auto;
   background-color: #fff;
 }
+
+.scroll-view_H{
+  white-space: nowrap;
+  height: 170px;
+}
+
+.scroll-view-item_H {
+  display: inline-block;
+  width: 80px;
+  margin: 10px 10px 10px 0;
+  text-align: center;
+  font-size: 12px;
+  word-break:keep-all;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.scroll-view-item_H image {
+  width: 80px;
+  height: 118px;
+}
+
+.scroll-view-item_H view {
+  width: 100%;
+}

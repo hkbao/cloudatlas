@@ -1,8 +1,32 @@
 var sharePage = function (e) {
-  captureImage(this.data.imgUrl.replace('http://101.132.46.130', 'https://cloudatlas.applinzi.com'), this.data.info)
+  this.setData({
+    screenCap: true
+  });
+  captureImage(this.data.info)
 }
 
-var captureImage = function(imgUrl, info) {
+var captureImage = function(info) {
+  wx.captureScreen({
+    success: function (res) {
+      wx.saveImageToPhotosAlbum({
+        filePath: res.tempFilePath,
+        success: function (res) {
+          wx.showToast({
+            title: '截图成功',
+            icon: 'success',
+            duration: 3000
+          });
+        }
+      })
+    },
+    fail: function (res) {
+      wx.showModal({
+        content: 'iOS暂不支持截图分享，如果喜欢这个程序，请手动截图并分享到朋友圈。',
+        showCancel: false
+      })
+    }
+  })
+  /*
   wx.showModal({
     content: '点击确定把云图保存到相册，由于微信暂不支持小程序直接分享到朋友圈，如果喜欢本程序，请手动分享。',
     showCancel: true,
@@ -33,8 +57,9 @@ var captureImage = function(imgUrl, info) {
             })
           },
           fail: function (res) {
+            console.log(res)
             wx.showToast({
-              title: res.data,
+              title: res,
               icon: 'loading',
               duration: 3000
             });
@@ -43,6 +68,7 @@ var captureImage = function(imgUrl, info) {
       }
     }
   });
+  */
 }
 
 var shareApp = function (res) {
@@ -52,7 +78,7 @@ var shareApp = function (res) {
   }
   return {
     title: '你的关键词 - ' + this.data.info.title,
-    path: '/douban/movie?id=' + this.data.id,
+    //path: '/douban/movie?id=' + this.data.id,
     success: function (res) {
       // 转发成功
     },

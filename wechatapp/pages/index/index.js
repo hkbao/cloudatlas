@@ -1,21 +1,22 @@
 //index.js
 //获取应用实例
-var wccanvas = require('../common/wccanvas.js')
+//var wccanvas = require('../common/wccanvas.js')
 Page({
-  suggestUrls: ['', 'https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
+  suggestUrls: ['https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
   data: {
-    dataSources: ['baidu/news', 'douban/movie', 'douban/book', 'douban/music'],
-    dataSourceNames: ['新闻', '电影', '书籍', '音乐'],
-    placeHolders: ['人物,事件,地点', '电影,电视剧,综艺', '书名,作者名', '歌曲名,专辑名'],
+    dataSources: ['douban/movie', 'douban/book', 'douban/music'],
+    dataSourceNames: ['电影', '书籍', '音乐'],
+    placeHolders: ['电影,电视剧,综艺', '书名,作者名', '歌曲名,专辑名'],
     searchSuggestions: [],
+    movieInTheaters: [],
+    movieUSBox: [],
     dataSourceIndex: 0,
     qstr: ''
   },
   //事件处理函数
   bindDataSourceChange: function(e) {
-    console.log(e.detail.value)
     this.setData({
-      dataSourceIndex: e.detail.value,
+      dataSourceIndex: parseInt(e.detail.value),
       searchSuggestions: []
     })
     if (this.data.qstr != '') {
@@ -41,15 +42,14 @@ Page({
     var info = data
     switch (this.data.dataSourceIndex) {
       case 0:
-      case 1:
         break;
-      case 2:
+      case 1:
         for (var i in info) {
           info[i].img = info[i].pic
           info[i].sub_title = info[i].author_name
         }
         break;
-      case 3:
+      case 2:
         for (var i in info) {
           info[i].img = info[i].pic
           if (info[i].type == 's') {
@@ -81,13 +81,56 @@ Page({
       }
     })
   },
+  getMovieInTheaters: function() {
+    var that = this
+    wx.request({
+      url: 'https://api.douban.com/v2/movie/in_theaters',
+      header: {
+        'content-type': 'json'
+      },
+      success: function (res) {
+        that.setData({
+          movieInTheaters: res.data.subjects.slice(0,10)
+        });
+      }
+    })
+  },
+  getMovieInTheaters: function () {
+    var that = this
+    wx.request({
+      url: 'https://api.douban.com/v2/movie/in_theaters',
+      header: {
+        'content-type': 'json'
+      },
+      success: function (res) {
+        that.setData({
+          movieInTheaters: res.data.subjects.slice(0, 10)
+        });
+      }
+    })
+  },
+  getMovieUSBox: function () {
+    var that = this
+    wx.request({
+      url: 'https://api.douban.com/v2/movie/us_box',
+      header: {
+        'content-type': 'json'
+      },
+      success: function (res) {
+        that.setData({
+          movieUSBox: res.data.subjects.slice(0, 10)
+        });
+      }
+    })
+  },
   shareApp: function() {
     wx.showShareMenu({
       withShareTicket: true
     })
   },
   onLoad: function() {
-    console.log('onLoad')
-    wccanvas.getTopNews()
+    this.getMovieInTheaters()
+    this.getMovieUSBox()
+    //wccanvas.getTopNews()
   }
 })

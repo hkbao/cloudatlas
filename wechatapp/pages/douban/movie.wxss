@@ -1,7 +1,7 @@
 /* movie.wxss */
 @import "template.wxss";
 
-.post_img {
-  width: 122px;
-  height: 180px;
+.post-img {
+  width: 91px;
+  height: 135px;
 }
