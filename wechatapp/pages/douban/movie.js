@@ -48,19 +48,17 @@ Page({
       banner: data.image.replace('/ipst/', '/lpst/'),
       attrs: [
         '',
-        data.attrs.movie_duration + ' ' + data.attrs.movie_type.join('/'),
-        data.attrs.pubdate.pop() + ' ' + data.attrs.country.join('/')
+        (data.attrs.movie_duration? data.attrs.movie_duration: '') + ' ' + (data.attrs.movie_type? data.attrs.movie_type.join('/'): ''),
+        (data.attrs.pubdate? data.attrs.pubdate.pop(): '') + ' ' + (data.attrs.country? data.attrs.country.join('/'): '')
       ]
     }
 
     //Remove english names
-    var casts = data.attrs.cast.slice(0,3)
-    if (data.attrs.director) {
-      casts.splice(0, 0, data.attrs.director.join(' '))
-    }
+    var casts = data.attrs.cast? data.attrs.cast.slice(0,4): []
+    casts.splice(0, 0, data.attrs.director? data.attrs.director.join(' '): '')
     for (var i in casts) {
       casts[i] = casts[i].split(' ')[0]
-      if (i == 0) { casts[i] += '(导演)' }
+      if (i == 0 && casts[i] != '') { casts[i] += '(导演)' }
     }
     info.attrs[0] = casts.join('/')
     if (!this.hasChineseChar(info.title)) {

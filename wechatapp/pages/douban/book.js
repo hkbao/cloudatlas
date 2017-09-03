@@ -45,7 +45,7 @@ Page({
       image: data.image,
       banner: data.image,
       attrs: [
-        data.author.join('/') + '(作者)/' + data.pubdate,
+        (data.author? data.author.join('/'): '未知') + '(作者)/' + data.pubdate,
         data.publisher,
         data.pages + '页/￥' + data.price + ''
       ]
