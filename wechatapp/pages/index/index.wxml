@@ -54,7 +54,7 @@
       <view><text type style="font-size: 12px; color: grey">豆瓣电影Top10:</text></view>
       <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll">
         <view wx:for="{{movieTop250}}" wx:key="index" class="scroll-view-item_H">
-          <navigator url="../douban/movie?id={{item.subject.id}}">
+          <navigator url="../douban/movie?id={{item.id}}">
             <view><image src="{{item.images.medium}}"></image></view>
             <view>{{item.title}}</view>
             <!--<view>{{item.subject.rating.average}}</view>-->
