@@ -5,11 +5,12 @@
       <button class="mini-btn weui-footer__link" plain="true" type="default" size="mini" bindtap="shareThisPage" hidden="{{imgLoading}}"><image class="weui-footer__image" src="/images/capture.png"></image>截图并分享</button>
     </view>
     <view class="weui-flex weui-article" style="margin-top: -30px" wx:if="{{screenCap}}">
-      <view class="weui-flex__item" style="padding-top: 20px">
+      <view class="weui-flex__item">
         <view class="placeholder">根据大数据分析，构建关键词云图</view>
-        <view class="placeholder">长按二维码，生成你的关键词 -></view>
+        <view class="placeholder">长按二维码，生成你的关键词</view>
+        <view class="placeholder">Copyright © iamted 数据来自豆瓣</view>
       </view>
-      <view><image src="/images/qrcode.jpg" style="width: 86px; height: 98px"></image></view>
+      <view><image src="/images/qrcode.jpg" style="width: 80px; height: 80px"></image></view>
     </view>
     <view class="weui-footer__text" hidden="{{screenCap}}">Copyright © iamted project cloudatlas 数据来自豆瓣</view>
   </view>

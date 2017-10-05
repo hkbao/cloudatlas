@@ -21,7 +21,7 @@ var captureImage = function(info) {
     },
     fail: function (res) {
       wx.showModal({
-        content: 'iOS暂不支持截图分享，如果喜欢这个程序，请手动截图并分享到朋友圈。',
+        content: '暂不支持截图分享，如果喜欢这个程序，请手动截图并分享到朋友圈。',
         showCancel: false
       })
     }

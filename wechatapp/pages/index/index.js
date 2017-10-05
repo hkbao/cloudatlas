@@ -1,6 +1,4 @@
 //index.js
-//获取应用实例
-//var wccanvas = require('../common/wccanvas.js')
 Page({
   suggestUrls: ['https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
   data: {
@@ -9,7 +7,7 @@ Page({
     placeHolders: ['电影,电视剧,综艺', '书名,作者名', '歌曲名,专辑名'],
     searchSuggestions: [],
     movieInTheaters: [],
-    movieUSBox: [],
+    movieTop250: [],
     dataSourceIndex: 0,
     qstr: ''
   },
@@ -95,31 +93,19 @@ Page({
       }
     })
   },
-  getMovieInTheaters: function () {
+  getMovieTop250: function () {
     var that = this
     wx.request({
-      url: 'https://api.douban.com/v2/movie/in_theaters',
+      url: 'https://api.douban.com/v2/movie/top250',
       header: {
         'content-type': 'json'
       },
       success: function (res) {
+        
         that.setData({
-          movieInTheaters: res.data.subjects.slice(0, 10)
+          movieTop250: res.data.subjects.slice(0, 10)
         });
-      }
-    })
-  },
-  getMovieUSBox: function () {
-    var that = this
-    wx.request({
-      url: 'https://api.douban.com/v2/movie/us_box',
-      header: {
-        'content-type': 'json'
-      },
-      success: function (res) {
-        that.setData({
-          movieUSBox: res.data.subjects.slice(0, 10)
-        });
+        console.log(that.data.movieTop250);
       }
     })
   },
@@ -130,7 +116,6 @@ Page({
   },
   onLoad: function() {
     this.getMovieInTheaters()
-    this.getMovieUSBox()
-    //wccanvas.getTopNews()
+    this.getMovieTop250()
   }
 })
