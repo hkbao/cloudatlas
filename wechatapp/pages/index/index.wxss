@@ -17,9 +17,9 @@
 }
 
 .logo {
-  width: 77px;
-  height: 49px;
-  margin-right: 20px;
+  width: 80px;
+  height: 51px;
+  margin-right: 18px;
 }
 
 .weui-panel {

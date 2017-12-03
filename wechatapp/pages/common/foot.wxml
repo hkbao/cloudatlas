@@ -1,5 +1,5 @@
 <template name="foot">
-  <view class="weui-footer page-foot">
+  <view class="weui-footer page__foot">
     <view class="weui-footer__links" hidden="{{screenCap}}">
       <button id="share_app" class="mini-btn weui-footer__link" plain="true" type="default" size="mini" open-type="share"><image class="weui-footer__image" src="/images/share.png"></image>分享给朋友</button>
       <button id="share_screenshot" class="mini-btn weui-footer__link" plain="true" type="default" size="mini" bindtap="shareThisPage" hidden="{{imgLoading}}"><image class="weui-footer__image" src="/images/capture.png"></image>截图并分享</button>

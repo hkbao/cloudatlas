@@ -7,7 +7,7 @@ Page({
     placeHolders: ['电影,电视剧,综艺', '书名,作者名', '歌曲名,专辑名'],
     searchSuggestions: [],
     movieInTheaters: [],
-    movieTop250: [],
+    tvShow: [],
     dataSourceIndex: 0,
     qstr: ''
   },
@@ -93,19 +93,18 @@ Page({
       }
     })
   },
-  getMovieTop250: function () {
+  getTVShow: function () {
     var that = this
     wx.request({
-      url: 'https://api.douban.com/v2/movie/top250',
+      url: 'https://movie.douban.com/j/search_subjects?type=tv&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start=0',
       header: {
         'content-type': 'json'
       },
       success: function (res) {
         
         that.setData({
-          movieTop250: res.data.subjects.slice(0, 10)
+          tvShow: res.data.subjects.slice(0, 10)
         });
-        console.log(that.data.movieTop250);
       }
     })
   },
@@ -116,6 +115,6 @@ Page({
   },
   onLoad: function() {
     this.getMovieInTheaters()
-    this.getMovieTop250()
+    this.getTVShow()
   }
 })

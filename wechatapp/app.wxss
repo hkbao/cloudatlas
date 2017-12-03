@@ -22,7 +22,7 @@ page {
 }
 
 .page__foot{
-  margin: 10rpx 0 10rpx 0;
+  margin: -30rpx 0 30rpx 0;
   text-align: center;
   color: #BEBEBE;
   font-size: 0;
