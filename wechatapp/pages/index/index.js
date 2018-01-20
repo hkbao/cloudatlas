@@ -1,4 +1,5 @@
 //index.js
+var app = getApp()
 Page({
   suggestUrls: ['https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
   data: {
@@ -82,7 +83,7 @@ Page({
   getMovieInTheaters: function() {
     var that = this
     wx.request({
-      url: 'https://api.douban.com/v2/movie/in_theaters',
+      url: app.globalData.apiRoot + 'movie/in_theaters?count=10',
       header: {
         'content-type': 'json'
       },

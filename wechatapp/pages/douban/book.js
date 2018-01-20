@@ -26,7 +26,7 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: 'https://api.douban.com/v2/book/' + option.id,
+      url: app.globalData.apiRoot + 'book/' + option.id,
       header: {
         'content-type': 'json'
       },

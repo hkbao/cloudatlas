@@ -26,9 +26,10 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: 'https://api.douban.com/v2/movie/' + option.id,
+      url: app.globalData.apiRoot + 'movie/' + option.id,
       header: {
-        'content-type': 'json'
+        'content-type': 'json',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'
       },
       success: function (res) {
         that.setData({

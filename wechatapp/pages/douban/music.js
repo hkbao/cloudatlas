@@ -25,7 +25,7 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: 'https://api.douban.com/v2/music/' + option.id,
+      url: app.globalData.apiRoot + 'music/' + option.id,
       header: {
         'content-type': 'json'
       },

@@ -24,6 +24,6 @@ App({
   },
 
   globalData: {
-    userInfo: null
+    apiRoot: 'https://gdyhelper.applinzi.com/doubanproxy/'
   }
 })
