@@ -1,0 +1,3 @@
+<template name="cloudcanvas">
+<canvas canvas-id="cloudcanvas" class="canvas"></canvas>
+</template>

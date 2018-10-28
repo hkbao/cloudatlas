@@ -24,6 +24,6 @@ App({
   },
 
   globalData: {
-    apiRoot: 'https://gdyhelper.applinzi.com/doubanproxy/'
+    apiRoot: 'https://cloudatlas.applinzi.com'
   }
 })

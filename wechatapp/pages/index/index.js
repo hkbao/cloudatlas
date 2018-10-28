@@ -4,7 +4,7 @@ Page({
   suggestUrls: ['https://movie.douban.com/j/subject_suggest', 'https://book.douban.com/j/subject_suggest', 'https://music.douban.com/j/subject_suggest'],
   data: {
     dataSources: ['douban/movie', 'douban/book', 'douban/music'],
-    dataSourceNames: ['电影', '书籍', '音乐'],
+    dataSourceNames: ['电影'],
     placeHolders: ['电影,电视剧,综艺', '书名,作者名', '歌曲名,专辑名'],
     searchSuggestions: [],
     movieInTheaters: [],
@@ -83,7 +83,7 @@ Page({
   getMovieInTheaters: function() {
     var that = this
     wx.request({
-      url: app.globalData.apiRoot + 'movie/in_theaters?count=10',
+      url: app.globalData.apiRoot + '/douban/api/movie/in_theaters?count=10',
       header: {
         'content-type': 'json'
       },

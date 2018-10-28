@@ -4,8 +4,8 @@ var app = getApp()
 Page({
   data: {
     id: '',
-    imgLoading: true,
-    info: {}
+    info: {},
+    keywords: []
   },
   bindCloudImageLoad: function (e) {
     this.setData({
@@ -16,8 +16,7 @@ Page({
   onLoad: function (option) {
     var that = this
     this.setData({
-      id: option.id,
-      imgUrl: 'http://101.132.46.130/app/wordcloud?t=music&q=' + option.id
+      id: option.id
     })
     wx.showToast({
       title: '正在获取信息',
@@ -25,7 +24,7 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: app.globalData.apiRoot + 'music/' + option.id,
+      url: app.globalData.apiRoot + '/douban/api/music/' + option.id,
       header: {
         'content-type': 'json'
       },

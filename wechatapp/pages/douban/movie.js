@@ -1,24 +1,18 @@
 //movie.js
 var share = require('share.js')
+var cloud = require('../common/cloud.js')
 var app = getApp()
 Page({
   data: {
     id: '',
     screenCap: false,
-    imgLoading: true,
-    info: {}
+    info: {},
+    keywords: []
   },
-  bindCloudImageLoad: function(e) {
-    this.setData({
-      imgLoading: false
-    })
-  },
-  shareThisPage: share.sharePage,
   onLoad: function (option) {
     var that = this
     this.setData({
-      id: option.id,
-      imgUrl: 'http://101.132.46.130/app/wordcloud?t=movie&q=' + option.id
+      id: option.id
     })
     wx.showToast({
       title: '正在获取信息',
@@ -26,18 +20,26 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: app.globalData.apiRoot + 'movie/' + option.id,
-      header: {
-        'content-type': 'json',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'
-      },
+      url: app.globalData.apiRoot + '/douban/api/movie/' + option.id,
       success: function (res) {
         that.setData({
           info: that.getMovieInfo(res.data)
         });
         wx.hideToast()
       }
+    }),
+    wx.request({
+      url: app.globalData.apiRoot + '/keywords/movie/' + option.id,
+      success: function (res) {
+        that.setData({
+          keywords: res.data.keywords
+        });
+        cloud.drawCloud(that.data.keywords)
+      }
     })
+  },
+  onUnload: function() {
+    cloud.stopAnimation()
   },
   getMovieInfo: function (data) {
     var info = {
@@ -76,5 +78,6 @@ Page({
   /**
   * 用户点击右上角分享
   */
-  onShareAppMessage: share.shareApp
+  onShareAppMessage: share.shareApp,
+  shareThisPage: share.sharePage
 })

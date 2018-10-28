@@ -34,14 +34,6 @@
   border-top: none;
 }
 
-.canvas {
-  width: 96%;
-  height: 320px;
-  margin: 20px;
-  padding: auto;
-  background-color: #fff;
-}
-
 .scroll-view_H{
   white-space: nowrap;
   height: 170px;

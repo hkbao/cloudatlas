@@ -8,7 +8,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.5.4",
+	"libVersion": "2.3.1",
 	"appid": "wx2e2a658c2834586b",
 	"projectname": "%E4%BD%A0%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D",
 	"condition": {
@@ -34,16 +34,21 @@
 				}
 			]
 		},
-		"miniprogram": {
+		"plugin": {
 			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
 			"list": [
 				{
-					"name": "test",
-					"pathName": "COMPONENT/music",
-					"query": "a=哈哈",
-					"scene": 1044,
-					"shareInfo": {},
-					"referrerInfo": {}
+					"id": -1,
+					"name": "movie",
+					"pathName": "pages/douban/movie",
+					"query": "id=26425063"
 				}
 			]
 		}

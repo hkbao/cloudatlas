@@ -26,7 +26,7 @@ Page({
       duration: 10000
     })
     wx.request({
-      url: app.globalData.apiRoot + options.type + '/search?q=' + options.q,
+      url: app.globalData.apiRoot + '/douban/api/' + options.type + '/search?q=' + options.q,
       header: {
         'content-type': 'json'
       },
